@@ -44,7 +44,6 @@ function NaziZombies::Player::QuickReload()
 	local curTime = Time()
 	local nextPrimaryAttack = weapon.GetNetProp("m_flNextPrimaryAttack")
 	local nextSecondaryAttack = weapon.GetNetProp("m_flNextSecondaryAttack")
-	local tick = weapon.GetNetProp("m_nNextThinkTick") 
 
 	nextPrimaryAttack = curTime + (nextPrimaryAttack - curTime) / quickReloadSpeed
 	nextSecondaryAttack = curTime + (nextSecondaryAttack - curTime) / quickReloadSpeed
@@ -52,11 +51,5 @@ function NaziZombies::Player::QuickReload()
 	weapon.SetNetProp("m_flPlaybackRate", quickReloadSpeed)
 	weapon.SetNetProp("m_flNextPrimaryAttack", nextPrimaryAttack)
 	weapon.SetNetProp("m_flNextSecondaryAttack", nextSecondaryAttack)
-	SetNetProp("m_flNextAttack", 0.0)
-}
-
-// AddTimer(delay, repeat, func, paramTable = null, flags = 0, value = {})
-function NaziZombies::Player::StopReloading() 
-{
-	
+	SetNetProp("m_flNextAttack", nextPrimaryAttack)
 }
