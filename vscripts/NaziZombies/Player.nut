@@ -18,7 +18,6 @@
 //  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH 
 //  THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-
 class ::NaziZombies.Player extends ::VSLib.Player {
 
     constructor(index)
@@ -27,6 +26,7 @@ class ::NaziZombies.Player extends ::VSLib.Player {
 	}
 
     hasQuickReload = true
+	quickReloadSpeed = 2.0
 }
 
 function NaziZombies::Player::OnWeaponReload(bManual, params)
@@ -39,4 +39,24 @@ function NaziZombies::Player::OnWeaponReload(bManual, params)
 function NaziZombies::Player::QuickReload() 
 {
 	printl("Quick Reloading!")
+
+	local weapon = GetActiveWeapon()
+	local curTime = Time()
+	local nextPrimaryAttack = weapon.GetNetProp("m_flNextPrimaryAttack")
+	local nextSecondaryAttack = weapon.GetNetProp("m_flNextSecondaryAttack")
+	local tick = weapon.GetNetProp("m_nNextThinkTick") 
+
+	nextPrimaryAttack = curTime + (nextPrimaryAttack - curTime) / quickReloadSpeed
+	nextSecondaryAttack = curTime + (nextSecondaryAttack - curTime) / quickReloadSpeed
+	
+	weapon.SetNetProp("m_flPlaybackRate", quickReloadSpeed)
+	weapon.SetNetProp("m_flNextPrimaryAttack", nextPrimaryAttack)
+	weapon.SetNetProp("m_flNextSecondaryAttack", nextSecondaryAttack)
+	SetNetProp("m_flNextAttack", 0.0)
+}
+
+// AddTimer(delay, repeat, func, paramTable = null, flags = 0, value = {})
+function NaziZombies::Player::StopReloading() 
+{
+	
 }

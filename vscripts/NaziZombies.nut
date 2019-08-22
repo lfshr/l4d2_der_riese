@@ -23,8 +23,6 @@
 IncludeScript("VSLib.nut");
 IncludeScript("NaziZombies/Player.nut")
 
-player <- ::VSLib.Player(1)
-
 function Notifications::OnWeaponReload::TryQuickReload(entity, bManual, params)
 {
     printl(Z_SURVIVOR)
