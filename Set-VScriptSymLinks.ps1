@@ -10,8 +10,6 @@ Get-ChildItem -Path $vscriptPath | Where-Object {
     (Split-Path -Path $_.Target) -eq (Join-Path -Path $PSScriptRoot -ChildPath "vscripts")
 } | Remove-Item -Force
 
-return
-
 Get-ChildItem -Path $PSScriptRoot\vscripts | ForEach-Object {
     $splat = @{
         Path = Join-Path -Path $vscriptPath -ChildPath $_.Name
