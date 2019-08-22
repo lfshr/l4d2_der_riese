@@ -25,7 +25,7 @@ class ::NaziZombies.Player extends ::VSLib.Player {
 		base.constructor(index);
 	}
 
-    hasQuickReload = true
+	hasQuickReload = true
 	quickReloadSpeed = 2.0
 }
 
