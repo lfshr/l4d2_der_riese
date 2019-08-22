@@ -23,9 +23,8 @@
 IncludeScript("VSLib.nut");
 IncludeScript("NaziZombies/Player.nut")
 
-function Notifications::OnWeaponReload::TryQuickReload(entity, bManual, params)
+function Notifications::OnWeaponReload::QuickReload(entity, bManual, params)
 {
-    printl(Z_SURVIVOR)
     if (entity.GetPlayerType() == Z_SURVIVOR) {
         ::NaziZombies.Player(entity).OnWeaponReload(bManual, params)
     }

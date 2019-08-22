@@ -38,8 +38,6 @@ function NaziZombies::Player::OnWeaponReload(bManual, params)
 
 function NaziZombies::Player::QuickReload() 
 {
-	printl("Quick Reloading!")
-
 	local weapon = GetActiveWeapon()
 	local curTime = Time()
 	local nextPrimaryAttack = weapon.GetNetProp("m_flNextPrimaryAttack")
