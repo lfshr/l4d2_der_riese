@@ -30,7 +30,7 @@ IncludeScript("NaziZombies/Player.nut")
 function Notifications::OnWeaponReload::QuickReload(entity, bManual, params)
 {
     if (entity.GetPlayerType() == Z_SURVIVOR) {
-        ::NaziZombies.Player(entity).TryQuickReload(::NaziZombies.QUICK_RELOAD_SPEED)
+        ::NaziZombies.Player(entity).QuickReload(::NaziZombies.QUICK_RELOAD_SPEED)
     }
 }
 
