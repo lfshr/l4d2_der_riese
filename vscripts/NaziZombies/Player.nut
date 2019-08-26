@@ -26,28 +26,49 @@ class ::NaziZombies.Player extends ::VSLib.Player {
 	}
 
 	hasQuickReload = true
-	quickReloadSpeed = 2.0
+	hasQuickRevive = true
 }
 
-function NaziZombies::Player::OnWeaponReload(bManual, params)
+function NaziZombies::Player::QuickReload(speed) 
 {
 	if(hasQuickReload) {
-		QuickReload()
+		local weapon = GetActiveWeapon()
+		local curTime = Time()
+		local nextPrimaryAttack = weapon.GetNetProp("m_flNextPrimaryAttack")
+		local nextSecondaryAttack = weapon.GetNetProp("m_flNextSecondaryAttack")
+
+		nextPrimaryAttack = curTime + (nextPrimaryAttack - curTime) / speed
+		nextSecondaryAttack = curTime + (nextSecondaryAttack - curTime) / speed
+		
+		weapon.SetNetProp("m_flPlaybackRate", speed)
+		weapon.SetNetProp("m_flNextPrimaryAttack", nextPrimaryAttack)
+		weapon.SetNetProp("m_flNextSecondaryAttack", nextSecondaryAttack)
+		SetNetProp("m_flNextAttack", nextPrimaryAttack)
 	}
 }
 
-function NaziZombies::Player::QuickReload() 
-{
-	local weapon = GetActiveWeapon()
-	local curTime = Time()
-	local nextPrimaryAttack = weapon.GetNetProp("m_flNextPrimaryAttack")
-	local nextSecondaryAttack = weapon.GetNetProp("m_flNextSecondaryAttack")
+function NaziZombies::Player::QuickRevive(revivee, speed) {
+	local quickReviveTimerName = GetBaseCharacterName() + "_quickrevive"
 
-	nextPrimaryAttack = curTime + (nextPrimaryAttack - curTime) / quickReloadSpeed
-	nextSecondaryAttack = curTime + (nextSecondaryAttack - curTime) / quickReloadSpeed
-	
-	weapon.SetNetProp("m_flPlaybackRate", quickReloadSpeed)
-	weapon.SetNetProp("m_flNextPrimaryAttack", nextPrimaryAttack)
-	weapon.SetNetProp("m_flNextSecondaryAttack", nextSecondaryAttack)
-	SetNetProp("m_flNextAttack", nextPrimaryAttack)
+	if(hasQuickRevive) {
+		local timerParams = {
+			revivee = revivee
+			revivor = this
+		}
+
+		Timers.AddTimerByName(quickReviveTimerName,
+			::NaziZombies.DEFAULT_REVIVE_TIME / speed,
+			false,
+			CompleteQuickRevive,
+			timerParams)
+	}
+}
+
+function NaziZombies::Player::CompleteQuickRevive(params){
+	::NaziZombies.Player(params.revivee).Revive()
+}
+
+function NaziZombies::Player::CancelQuickRevive() {
+	local quickReviveTimerName = GetBaseCharacterName() + "_quickrevive"
+	Timers.RemoveTimerByName(quickReviveTimerName)
 }

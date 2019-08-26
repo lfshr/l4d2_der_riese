@@ -18,7 +18,11 @@
 //  TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH 
 //  THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-::NaziZombies <- {};
+::NaziZombies <- {
+    DEFAULT_REVIVE_TIME = 5.0
+    QUICK_RELOAD_SPEED = 2.0
+    QUICK_REVIVE_SPEED = 3.0
+};
 
 IncludeScript("VSLib.nut");
 IncludeScript("NaziZombies/Player.nut")
@@ -26,6 +30,20 @@ IncludeScript("NaziZombies/Player.nut")
 function Notifications::OnWeaponReload::QuickReload(entity, bManual, params)
 {
     if (entity.GetPlayerType() == Z_SURVIVOR) {
-        ::NaziZombies.Player(entity).OnWeaponReload(bManual, params)
+        ::NaziZombies.Player(entity).TryQuickReload(::NaziZombies.QUICK_RELOAD_SPEED)
+    }
+}
+
+function Notifications::OnReviveBegin::QuickRevive(revivee, revivor, params) 
+{
+    if(revivor.GetPlayerType() == Z_SURVIVOR) {
+        ::NaziZombies.Player(revivor).QuickRevive(revivee, ::NaziZombies.QUICK_REVIVE_SPEED)
+    }
+}
+
+function Notifications::OnReviveEnd::CancelQuickRevive(revivee, revivor, params)
+{
+    if(revivor.GetPlayerType() == Z_SURVIVOR) {
+        ::NaziZombies.Player(revivor).CancelQuickRevive()
     }
 }
