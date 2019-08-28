@@ -23,10 +23,68 @@ class ::NaziZombies.Player extends ::VSLib.Player {
     constructor(index)
 	{
 		base.constructor(index);
+
+		AddThinkFunction(Think)
 	}
 
+	LastUpdate = Time()
+	NextHealthRegen = Time()
+
+	hasQuickReload = false
+	hasQuickRevive = false
+	hasJuggernaut  = false
+}
+
+function NaziZombies::Player::Think()
+{
+	local player = NaziZombies.Player(ent)
+	local curTime = Time()
+	local deltaTime = Time() - player.LastUpdate
+	local health = player.GetHealth()
+	
+	if (health < player.GetMaxHealth() && curTime > player.NextHealthRegen)
+	{
+		player.SetHealth(health + ::NaziZombies.HEALTH_REGEN_RATE)
+	}
+
+	player.LastUpdate = curTime
+}
+
+function NaziZombies::Player::EnableEffect(effect)
+{
+	switch(effect)
+	{
+		case JUGGERNAUT:
+			printl("Enabling Juggernaut for " + GetName())
+			hasJuggernaut = true
+			SetMaxHealth(::NaziZombies.HEALTH_WITH_JUGGERNAUT)
+		case QUICKREVIVE:
+			hasQuickRevive = true
+		case QUICKRELOAD:
+			hasQuickReload = true
+	}
+}
+
+function NaziZombies::Player::GiveQuickReload()
+{
 	hasQuickReload = true
+}
+
+function NaziZombies::Player::GiveQuickRevive()
+{
 	hasQuickRevive = true
+}
+
+function NaziZombies::Player::GiveJuggernaut()
+{
+	hasJuggernaut = true
+	SetMaxHealth(::NaziZombies.HEALTH_WITH_JUGGERNAUT)
+}
+
+function NaziZombies::Player::RemoveJuggernaut()
+{
+	hasJuggernaut = true
+	SetMaxHealth(::NaziZombies.HEALTH_WITH_JUGGERNAUT)
 }
 
 function NaziZombies::Player::QuickReload(speed) 
