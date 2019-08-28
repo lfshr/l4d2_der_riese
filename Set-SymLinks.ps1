@@ -1,7 +1,7 @@
 #Requires -RunAsAdministrator
 
-#worksonmymachine tm
-$vscriptPath = "D:\SteamLibrary\steamapps\common\left 4 dead 2\left4dead2\scripts\vscripts"
+#Run in SteamLibrary\steamapps\common\Left 4 Dead 2\sdk_content\mapsrc\l4d2_der_riese
+$vscriptPath = Join-Path -Path $PSScriptRoot -ChildPath "../../../left4dead2/scripts/vscripts"
 
 # Remove old files
 Get-ChildItem -Path $vscriptPath | Where-Object {
