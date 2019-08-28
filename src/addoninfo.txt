@@ -1,0 +1,15 @@
+"AddonInfo"
+{
+	addonSteamAppID     550      	
+	addontitle 		"L4D2 Der Riese Alpha" 	
+	addonversion 		0.1			
+	addontagline 		""
+	addonauthor 		"The Fish" 		
+	addonauthorSteamID 	"http://steamcommunity.com/id/fisher122" 
+
+	addonContent_Map 1
+	addonContent_Script 1
+	addonURL0 "" 
+	addonDescription "Call of Duty Der Riese Zombies Prototype"
+
+} 

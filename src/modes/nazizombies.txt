@@ -1,0 +1,15 @@
+"nazizombies"
+{
+    "base"              "coop"
+    "maxplayers"        "4"
+    "DisplayTitle"      "Nazi Zombies"
+    "ShortDescription"  "Nazi Zombies Alpha"
+
+    "Image"             "maps/any"
+    "Author"            "The Fish"
+
+    convar
+    {
+
+    }
+}
