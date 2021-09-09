@@ -1,7 +1,16 @@
 #Requires -RunAsAdministrator
 
-#worksonmymachine tm
-$addonPath = Join-Path -Path $PSScriptRoot -ChildPath "../../../left4dead2/addons"
+$reg = Get-Item -Path 'HKCU:\SOFTWARE\Classes\Local Settings\Software\Microsoft\Windows\Shell\MuiCache'
+$l4d = $reg.Property | Where-Object {$_ -like '*left4dead2.exe*'}
+
+if(-not $l4d)
+{
+    throw "Could not find Left 4 Dead 2"
+}
+
+$path = Split-Path $l4dValue
+
+$addonPath = Join-Path -Path $path -ChildPath "left4dead2/addons"
 $targetPath = Join-Path -Path $PSScriptRoot -ChildPath 'src'
 
 $splat = @{
