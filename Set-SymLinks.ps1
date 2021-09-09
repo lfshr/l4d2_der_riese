@@ -8,7 +8,7 @@ if(-not $l4d)
     throw "Could not find Left 4 Dead 2"
 }
 
-$path = Split-Path $l4dValue
+$path = Split-Path $l4d
 
 $addonPath = Join-Path -Path $path -ChildPath "left4dead2/addons"
 $targetPath = Join-Path -Path $PSScriptRoot -ChildPath 'src'
